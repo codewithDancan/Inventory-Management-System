@@ -1,0 +1,47 @@
+{% load static %}
+{% block content%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop with us</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body style ="text-align: center;">
+<h1 style='font-weight: bold'>Vehicles</h1>
+
+<br/>
+<div class='container'>
+    <div class='row'>
+        {% if other_vehicles %}
+    <ul>
+        {% for vehicle in other_vehicles reversed %}
+        <div class='col-sm-12 d-flex align-items-stretch'>
+            <div class='card mb-4'>
+                <a href="{{ base_url }}{% url 'vehicle_detail_view' vehicle.id %}" ><img src='{{vehicle.image.url}}'  width='300px' height= '220px' alt='image' class='img-thumbnail'></a>
+                <div class='card-body'>
+                    <a style= 'text-decoration: none;' href="{{ base_url }}{% url 'vehicle_detail_view' vehicle.id %}" ><h4>{{vehicle.vehicle_model.name}}</h4></a>
+                </div>
+            </div>
+        </div>
+
+            
+        {% endfor  %}
+    </ul>
+{% endif %}
+<div class='container'>
+    <h3>You can <br><br><a style='text-decoration: none;' href={% url 'vehicle-model-form-class' %}>Add a Vehicle Model</a></h3>
+</div>   
+    
+    </div>
+
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+{% endblock %}
+

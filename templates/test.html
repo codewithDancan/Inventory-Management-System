@@ -1,0 +1,25 @@
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<title>{{title}}</title>
+{% block head_stylesheets %}{% endblock %}
+</head>
+
+
+{% block page_title %} {{title}} {% endblock %}
+
+{% if body %}
+    <h3>{{body}}</h3>
+{% else %}
+    <h3>No title</h3>
+{% endif %}
+
+{% block footer %}
+{% endblock %}
+{% include 'footer.html'  %}
+{% endblock %}
+
+</html>

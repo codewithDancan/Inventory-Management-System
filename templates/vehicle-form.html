@@ -1,0 +1,55 @@
+{% block content %}
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a vehicle </title>
+    <script defer type='text/javascript' src='{{ base_urll }}{% static 'js/site.js' %}'></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <h1> Add a Vehicle </h1>
+<form method='post' id='form' enctype='multipart/form-data'>
+    {% csrf_token %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags%} class="{{message.tags}}"{% endif %}>{{message|safe}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {{ form.as_p}}
+    {% if buyer_formset %}
+        <h3>Prospective Buyers</h3>
+        {{ buyer_formset.non_form_errors }}
+        {{ buyer_formset.management_form}}
+
+        {% for form in buyer_formset %}
+            <div class='formset-container {{ buyer_formset.prefix }}'>
+                <div class='first-name'>
+                    {{ form.first_name.label}}: {{ form.first_name }}
+                
+                </div>
+                <div class='last-name'>
+                    {{ form.last_name.label}}: {{ form.last_name }}
+                
+                </div>
+
+            </div>
+        {% endfor %}
+    {% endif %}
+    <br>
+    <button id='add-formset' class='btn btn-lg btn-primary' type='button'>Add Another Prospective Buyer</button> <br><br>
+    <input type='submit' class='btn btn-lg btn-success' value = 'Save vehicle'>
+</form>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+{% endblock %}
+
+
+

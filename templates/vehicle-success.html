@@ -1,0 +1,11 @@
+{% block content %}
+<body style='text-align: center;'>
+<h1>New vehicle successfully created</h1>
+
+<div class='container'>
+    <h3>You can <br><br><a style='text-decoration: none;' href={% url 'vehicle-form-class' %}>Add a Vehicle</a>
+        <br>or<br><a style='text-decoration: none;' href={% url 'vehicle-model-form-class' %}>Add a Vehicle Model</a>
+        <br>or<br><a style='text-decoration: none;' href={% url 'engine-model-form-class' %}>Add a Vehicle Engine</a></h3>
+</div>
+</body>
+{% endblock %}

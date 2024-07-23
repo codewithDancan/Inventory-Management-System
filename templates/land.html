@@ -1,0 +1,49 @@
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class='container'>
+    <h1>Netify</h1>
+    <form action = '' method='post' enctype='multipart/form-data'>
+        {% csrf_token %}
+        {{form.as_p }}
+        <button type='submit' class='btn btn-lg btn-success'>Upload</button>
+    </form>
+
+
+    {% if obj %}
+    <h3>Image Successfully Uploaded: {{obj.caption}}</h3>
+    <img src='{{obj.image.url}}' alt='image' 
+    class='img-thumbnail' width='200px' height='180px'>
+    {% endif %}
+    
+    <hr>
+
+    {% for x in img %}
+    {% if forloop.first %}<div class='row'> {% endif %}
+        <div class='col-lg-4 col-md-4 col-12'>
+    <div class='text-center mt-2'>
+        <img src='{{x.image.url}}' alt='image' 
+        class='img-thumbnail' width='70%' height='70%'>  
+        <h3 class='text-center'>{{x.caption}}</h3>     
+    </div>
+        </div>
+        {% if forloop.counter|divisibleby:3 %}
+    </div>
+    <div class='row'> {% endif %}
+        {% if forloop.last%}
+    </div>
+    {% endif %}
+</div>
+{% endfor %}
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>

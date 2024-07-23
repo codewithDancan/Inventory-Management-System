@@ -1,0 +1,30 @@
+# keep rule
+!gitkeep.txt
+
+#django#
+db.sqlite3
+*.log
+*.pyc
+__pycache__
+
+
+#Media - User generated content #
+media/
+
+
+# Environments
+.env 
+virtual_env
+
+# visual studio code 
+*.suo 
+*.pyproj 
+*.pyproj.User
+*.history
+.vs/
+obj/
+
+
+
+# Heroku
+staticfiles/
