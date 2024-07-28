@@ -1,0 +1,131 @@
+[
+    {
+        "model": "app.vehiclemodel",
+        "pk": 1,
+        "fields": {
+            "name": "Ferari"
+        }
+    },
+    {
+        "model": "app.vehiclemodel",
+        "pk": 2,
+        "fields": {
+            "name": "Range Rover"
+        }
+    },
+    {
+        "model": "app.vehiclemodel",
+        "pk": 3,
+        "fields": {
+            "name": "V8"
+        }
+    },
+    {
+        "model": "app.engine",
+        "pk": 1,
+        "fields": {
+            "name": "FFFFF2024",
+            "vehicle_model": 1
+        }
+    },
+    {
+        "model": "app.engine",
+        "pk": 2,
+        "fields": {
+            "name": "RANGEABC3024",
+            "vehicle_model": 2
+        }
+    },
+    {
+        "model": "app.engine",
+        "pk": 3,
+        "fields": {
+            "name": "V8V82024",
+            "vehicle_model": 3
+        }
+    },
+    {
+        "model": "app.vehicle",
+        "pk": 1,
+        "fields": {
+            "vin": "FFABC123",
+            "sold": false,
+            "price_currency": "KSH",
+            "price": "3000000.00",
+            "vehicle_model": 1,
+            "engine": 1,
+            "make": 1,
+            "image": "images/ferari_l26wjlX.jpg"
+        }
+    },
+    {
+        "model": "app.vehicle",
+        "pk": 3,
+        "fields": {
+            "vin": "RRRR9090",
+            "sold": false,
+            "price_currency": "KSH",
+            "price": "4500000.00",
+            "vehicle_model": 2,
+            "engine": 2,
+            "make": 1,
+            "image": "images/range-rover_56vFO7t.jpg"
+        }
+    },
+    {
+        "model": "app.vehicle",
+        "pk": 5,
+        "fields": {
+            "vin": "V8123ABC",
+            "sold": false,
+            "price_currency": "KSH",
+            "price": "3100000.00",
+            "vehicle_model": 3,
+            "engine": 3,
+            "make": 3,
+            "image": "images/V8_pHQt4kJ.jpg"
+        }
+    },
+    {
+        "model": "app.seller",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$600000$SpzYOpM6ZZ1IXaSEQ4dt0G$tUSB1LS7woOSsa/I5U9PfQztYysC1OLsHP68LO5oJco=",
+            "last_login": "2024-07-26T08:47:06.529Z",
+            "is_superuser": true,
+            "username": "Dancan",
+            "first_name": "",
+            "last_name": "",
+            "email": "dan@gmail.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2024-07-26T07:58:16.215Z",
+            "name": null,
+            "groups": [],
+            "user_permissions": [],
+            "vehicle": []
+        }
+    },
+    {
+        "model": "app.seller",
+        "pk": 2,
+        "fields": {
+            "password": "123123",
+            "last_login": "2024-07-26T07:50:29Z",
+            "is_superuser": false,
+            "username": "Mary",
+            "first_name": "Mary",
+            "last_name": "Carson",
+            "email": "marycarson@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2024-07-26T07:59:17Z",
+            "name": "Mary Carson",
+            "groups": [],
+            "user_permissions": [
+                40
+            ],
+            "vehicle": []
+        }
+    }
+]

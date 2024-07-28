@@ -1,24 +1,49 @@
 from django.shortcuts import render
 from django.template.response import (TemplateResponse)
-from django.http import Http404, HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import (
+    Http404,
+      HttpRequest,
+        HttpResponse, 
+            HttpResponseRedirect,
+                JsonResponse,
+        ) 
 
 from app.models import *
 
 
 from django.views import View
 
-from .forms import ContactForm, VehicleForm, VehicleModelForm, EngineModelForm, ProspectiveBuyerFormSet
-from django.views.generic.edit import FormView, CreateView, UpdateView
+from .forms import(ContactForm,
+                    VehicleForm,
+                      VehicleModelForm,
+                        EngineModelForm,
+                          ProspectiveBuyerFormSet) 
+from django.views.generic.edit import (FormView,
+                                        CreateView,
+                                          UpdateView)
 from django.urls import reverse_lazy, reverse
 from django.core.exceptions import ValidationError
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 
 from django.contrib import messages
 from django.core.mail import EmailMessage
 from .email import send_email
 from django.conf import settings
-from .pdf import generate_pdf
+# from .pdf import generate_pdf
 
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet
+from .serializers import (
+    EngineSerializer, 
+    VehicleSerializer, 
+    VehicleModelSeerializer, 
+    SellerSerializer
+)
+from rest_framework.views import APIView
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
+import logging
 
 
 # Create your views here.
@@ -37,6 +62,9 @@ def practice_view(request, year):
    
     return TemplateResponse(request, 'practice.html', {'year': year})
 def practice_year_view(request, year):
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.INFO)
+    logger.info("The requested year is: %s % year")
     if year >=2020:
         print(type(year))
         print(year)
@@ -48,7 +76,7 @@ def practice_year_view(request, year):
 class VehicleListView(View):
     template_name = 'vehicle.html'
     def get(self, request, *args, **kwargs):
-        other_vehicles = Vehicle.objects.all()
+        other_vehicles = Vehicle.objects.prefetch_related("vehicle_sellers").select_related("vehicle_model", "engine").all()
         return TemplateResponse(request, self.template_name, {'other_vehicles': other_vehicles})
         
 
@@ -156,8 +184,8 @@ class VehicleFormCreateView(CreateView):
 
             vehicle = form.instance
             vehicle.save()
-            send_email()
-            generate_pdf()
+            # send_email(self, request)
+            #generate_pdf()
             return HttpResponseRedirect(reverse("vehicle-view"))
         except ValidationError:
             return TemplateResponse(request, self.template_name, {'form': form, 'buyer-formset': buyer_formset})
@@ -245,6 +273,90 @@ class VehicleModelFormUpdateView(UpdateView):
             return redirect('vehicle_view')
         else:
             return TemplateResponse(request, self.template_name, {'form': form})
+        
+class EngineViewSet(ModelViewSet):
+    queryset = Engine.objects.all().order_by("name")
+    serializer_class = EngineSerializer
+    permission_classes = [IsAuthenticated]
+
+class VehicleViewSet(ModelViewSet):
+    queryset = Vehicle.objects.all().order_by("vin")
+    serializer_class = VehicleSerializer
+    permission_classes = [IsAuthenticated]
+
+class VehicleModelViewSet(ModelViewSet):
+    queryset = VehicleModel.objects.all().order_by("name")
+    serializer_class = VehicleModelSeerializer
+    permission_classes = [IsAuthenticated]
+
+class SellerViewSet(ModelViewSet):
+    queryset = Seller.objects.all()
+    serializer_class = SellerSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class GetSellerView(View):
+    template_name = "get-seller.html"
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+        return TemplateResponse(request, self.template_name, context)
+    
+class GetSellerHTMLView(APIView):
+    permission_classes = [IsAuthenticated]
+    template_name = "seller.html"
+
+
+    def get(self, request, format=None, id=0, *args, **kwargs):
+        if request.user.is_authenticated and request.user.has_perm("view_user"):
+            try:
+                seller = Seller.objects.get(id=id)
+            except seller.DoesNotExist:
+                seller = None
+        else:
+            seller = None
+        context = {"seller": seller}
+        return render(request, self.template_name, context=context)
+class GetSellerWithTokenView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None, id=0, *args, **kwargs):
+        seller = None
+        req_user = request._user
+
+        if req_user.has_perm("view_user"):
+            perm_granted = True
+            try:
+                seller = Seller.objects.get(id=id)
+            except seller.DoesNotExist:
+                pass
+        else:
+            perm_granted = False
+
+        context = {
+                "request": request,
+                "seller": seller,
+            }
+
+        seller = SellerSerializer(seller, context=context)
+
+        new_context = {
+                "seller": seller.data,
+                "perm_granted": perm_granted
+            }
+        return JsonResponse(new_context)
+    
+
+class SellersView(View):
+    template_name = "sellers.html"
+
+    def get(self, request, *args, **kwargs):
+        try:
+            sellers = Seller.objects.prefetch_related("vehicle", "vehicle__vehicle_model", "vehicle__engine").all()
+        except sellers.DoesNotExist:
+            raise Http404("No Sellers Found")
+        return TemplateResponse(request, self.template_name, {"sellers": sellers})
+
 
 
 

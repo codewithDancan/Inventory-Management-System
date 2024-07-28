@@ -1,0 +1,30 @@
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details </title>
+    <script defer type='text/javascript' src='{{ base_urll }}{% static 'js/site.js' %}'></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<h1> Seller Details </h1>
+
+{% if seller %}
+    <h2> {{seller.first_name|safe}} {{seller.last_name|safe}}</h2>
+    <h3> {{seller.name|safe}} </h3>
+
+    {% if seller.vehicles %}
+    <ul>
+        {% for vehicle in seller.vehicles.all %}
+        <li> {{ vehicle.full_name}} </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% else %}
+    <p>
+        <b>No seller to Display</b><br>
+        <em>or you <b>DO NOT</b> have permissions</em>
+    </p>
+{% endif %}
+{% endblock %}

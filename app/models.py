@@ -16,6 +16,7 @@ MAKE_CHOICES = (
     (1, 'Buick'),
     (2, 'Cadillac'),
     (3, 'Chevrolet'),
+    (4, 'Jeep'),
 )
 
 
@@ -116,6 +117,9 @@ class Vehicle(models.Model):
     def get_absolute_url(self, request):
         base_url = request.build_absolute_uri('/') [:-1].strip('/')
         return base_url + reverse("vehicle_detail_view", kwargs={"id": self.pk})
+    
+    def natural_key(self):
+        return self.full_vehicle_name()
     
     
 

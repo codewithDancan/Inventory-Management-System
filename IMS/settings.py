@@ -39,6 +39,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 
 # Application definition
 
@@ -56,10 +60,14 @@ INSTALLED_APPS = [
     'image.apps.ImageConfig',
     'reports.apps.ReportsConfig',
     'rest_framework',
+    'rest_framework.authtoken',
+    'debug_toolbar',
+    #'drf-yasg',
     
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -198,4 +206,23 @@ MESSAGE_TAGS = {
     'CRITICAL': 'critical',
 }
 
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+
+    ],
+}
+
+def show_toolbar(request):
+    return True
+
+if os.getenv("SHOW_TOOLBAR_CALLBACK") == "True":
+    DEBUG_TOOLBAR_CONFIG = {
+        "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+    }
 

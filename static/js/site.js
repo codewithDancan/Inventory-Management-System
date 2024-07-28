@@ -20,3 +20,24 @@ let formsetContainer = document.querySelectorAll(
 
             totalForms.setAttribute('value', '${formsetNum + 1}');
     }
+
+    function $gotoSPA_Page() {
+        const input = document.getElementById("seller-id");
+        const container = document.getElementById("details");
+        const id = input.value;
+        var url = `/seller-token/${id}/`;
+
+        fetch (url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "2be586765275c87b57d640c4250b59710a1aa387",
+                "User": "Mary",
+            }
+        }).then(async(response) => {
+            return await response.text();
+        }).then(async(data) => {
+            const thisData = await data;
+            container.innerHTML =  await data;
+        });
+    }

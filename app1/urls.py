@@ -5,15 +5,45 @@ from .views import (
     practice_view, practice_year_view, VehicleListView,
       VehicleDetailView, TestPageView, FormClassView,
         VehicleFormCreateView, VehicleModelFormCreateView,
-          EngineCreateView, VehicleFormUpdateView, VehicleModelFormUpdateView
+          EngineCreateView, VehicleFormUpdateView, VehicleModelFormUpdateView,
+
+
+          EngineViewSet,
+            SellerViewSet,
+              VehicleViewSet,
+                VehicleModelViewSet,
+
+                GetSellerView,
+                GetSellerHTMLView,
+                  GetSellerWithTokenView,
+
+                  SellersView,
 )
+from rest_framework import routers
 
 
 
 register_converter(YearConverter, 'year')
 
 
+router = routers.DefaultRouter()
+router.register(r"engines", EngineViewSet)
+router.register(r"sellers", SellerViewSet)
+router.register(r"vehicles", VehicleViewSet)
+router.register(r"vehicle-models", VehicleModelViewSet)
+
+
 urlpatterns = [
+    path("get-seller/", GetSellerView.as_view(), name="get-seller"),
+    path("seller/<int:id>/", GetSellerHTMLView.as_view(), name="seller-detail"),
+    path("seller-token/<int:id>/", GetSellerWithTokenView.as_view(), name="seller-token-details"),
+    path("all-sellers/", SellersView.as_view(), name="all-sellers"),
+
+
+
+
+
+
     path('my_year_path/<year:year>/', TemplateView.as_view(template_name='index.html'),
           kwargs={"sub_title": 'Backend Developer \n @ Space Ya Tech'}),
     re_path('app1/(?P<year>[0-9]{4})/$', TemplateView.as_view(template_name='index.html'),

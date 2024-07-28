@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>View All Sellers</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body style="text-align: center" class="sellers">
+        <h1>All Sellers</h1>
+
+        {% if sellers %}
+            {% for seller in sellers %}
+                <p>First Name: {{seller.first_name}}</p>
+                <p>Last Name: {{seller.last_name}}</p>
+                <p>Username: {{seller.username}}</p>
+                <p>Business Name: {{seller.name}}</p>
+                <p>Email: {{seller.email}}</p>
+                <p>Last login: {{seller.last_login}}</p>
+                <p>Date Joined: {{seller.date_joined}}</p>
+                <p>Is staff?: {{seller.is_staff}}</p>
+                <p>Is Active? : {{seller.is_active}}</p>
+                <p>Is Superuser? : {{seller.is_superuser}}</p>
+
+        
+
+                {% if seller.vehicle.all %}
+                    <h2>Seller Vehicles</h2>
+                    {% for vehicle in seller.vehicle.all %}
+                        <div class="vehicle-box">
+                            <p>VIN: {{vehicle.vin}}</p>
+                            <p>Price: {{vehicle.price}}</p>
+                            <p>Make: {{vehicle.make}}</p>
+                            <p>Model: {{vehicle.vehicle_model}}</p>
+                            <p>Engine: {{vehicle.engine}}</p>
+                            <p>Is Sold?: {{vehicle.sold}}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <br/><hr/><br/>
+            {% endfor %}
+        {% endif %}
+      
+        <script src="" async defer></script>
+    </body>
+</html>

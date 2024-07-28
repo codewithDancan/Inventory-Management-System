@@ -29,6 +29,9 @@
             
         {% endfor  %}
     </ul>
+    {% for seller in other_vehicles.vehicle_sellers.all %}
+        {{ seller.username }}
+    {% endfor %}
 {% endif %}
 <div class='container'>
     <h3>You can <br><br><a style='text-decoration: none;' href={% url 'vehicle-model-form-class' %}>Add a Vehicle Model</a></h3>

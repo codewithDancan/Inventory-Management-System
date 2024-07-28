@@ -1,0 +1,33 @@
+- model: app.seller
+  fields:
+    password: pbkdf2_sha256$600000$SpzYOpM6ZZ1IXaSEQ4dt0G$tUSB1LS7woOSsa/I5U9PfQztYysC1OLsHP68LO5oJco=
+    last_login: 2024-07-26 08:47:06.529166+00:00
+    is_superuser: true
+    username: Dancan
+    first_name: ''
+    last_name: ''
+    email: dan@gmail.com
+    is_staff: true
+    is_active: true
+    date_joined: 2024-07-26 07:58:16.215692+00:00
+    name: null
+    groups: []
+    user_permissions: []
+    vehicle: []
+- model: app.seller
+  fields:
+    password: '123123'
+    last_login: 2024-07-26 07:50:29+00:00
+    is_superuser: false
+    username: Mary
+    first_name: Mary
+    last_name: Carson
+    email: marycarson@gmail.com
+    is_staff: false
+    is_active: true
+    date_joined: 2024-07-26 07:59:17+00:00
+    name: Mary Carson
+    groups: []
+    user_permissions:
+    - 40
+    vehicle: []

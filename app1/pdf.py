@@ -5,7 +5,7 @@ Django docs recommend the 'reportlab' package
 other packages include the xhtml2pdf, rlextra package etc...
 """
 
-from xhtml2pdf import pisa
+"""from xhtml2pdf import pisa
 from django.conf import settings
 from django.template.loader import get_template
 from django.http import HttpResponse
@@ -18,4 +18,4 @@ def generate_pdf(self, request):
     template = get_template("plain-text-format.html")
     html = template.render(context)
     result = pisa.CreatePDF(html, dest=dest,)
-    return HttpResponse(result.err)
+    return HttpResponse(result.err)"""

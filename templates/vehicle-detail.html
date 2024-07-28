@@ -9,7 +9,7 @@
 </head>
 
 <body style ="text-align: center;">
-<a href="{% url 'vehicle_view' %}" class='btn btn-lg btn-primary mt-4'>Back</a>
+<a href="{% url 'vehicle-view' %}" class='btn btn-lg btn-primary mt-4'>Back</a>
 <h1 style='font-weight: bold'>{{current_vehicle.vehicle_model}}</h1>
 <h4>{{current_vehicle.vin}}</h4>
 <a><img style="margin: 0 auto; border-radius: 10px" src='{{current_vehicle.image.url}}' width='300px' height= '220px' alt='image' class='img-thumbnail'></a>
